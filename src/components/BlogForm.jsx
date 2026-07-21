@@ -1,31 +1,38 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import BlogCard from "./BlogCard";
 
 function BlogForm({ addBlog }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
+  const wordCount = description
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0).length;
 
   function handleSubmit(e) {
     e.preventDefault();
-    const newBlog = {title, author, description,};
+    const newBlog = { title, author, description };
     addBlog(newBlog);
     setTitle("");
     setAuthor("");
     setDescription("");
-  
   }
-  function returnTohome(){
-    <Link className="hover:text-blue-400" to="/"></Link>
-
+  function returnTohome() {
+    <Link className="hover:text-blue-400" to="/"></Link>;
   }
 
   return (
-    <div className=" min-h-screen bg-gray-100 flex justify-center items-center p-5 text-center" >
+    <div className=" min-h-screen bg-gray-100 flex justify-center items-center p-5 text-center">
       <form
-        onSubmit= {handleSubmit}
-        className=" bg-white shadow-lg rounded-xl p-8 w-full max-w-xl" >
-        <h2 className="text-3xl font-bold text-center mb-6" > Create New Blog</h2>
+        onSubmit={handleSubmit}
+        className=" bg-white shadow-lg rounded-xl p-8 w-full max-w-xl"
+      >
+        <h2 className="text-3xl font-bold text-center mb-6">
+          {" "}
+          Create New Blog
+        </h2>
 
         {/* Title */}
         <input
@@ -33,7 +40,8 @@ function BlogForm({ addBlog }) {
           placeholder="Blog Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
         {/* Author */}
         <input
@@ -41,21 +49,28 @@ function BlogForm({ addBlog }) {
           placeholder="Author Name"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
-          className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
         {/* Description */}
+          <p className="text-sm text-gray-500 mt-2 float-right">
+          Words: <span className="font-semibold">{wordCount}</span>
+        </p>
         <textarea
           placeholder="Write your blog..."
           rows="5"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-       className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-
+          rows={8}
+          className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      
 
         {/* Button */}
         <button
           type="submit"
-          className=" w-30 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition" >
+          className=" w-30 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+        >
           Publish Blog
         </button>
       </form>

@@ -71,15 +71,7 @@ function BlogDetails({ blogs }) {
           </p>
 
           {/* Content */}
-          <p
-            className="
-            text-lg
-            leading-8
-            text-gray-700
-          "
-          >
-            {blog.description}
-          </p>
+          <p className="whitespace-pre-line">{blog.description}</p>
         </div>
       </article>
     </div>

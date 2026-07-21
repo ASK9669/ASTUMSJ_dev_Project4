@@ -1,0 +1,66 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+function BlogForm({ addBlog }) {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [description, setDescription] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newBlog = {title, author, description,};
+    addBlog(newBlog);
+    setTitle("");
+    setAuthor("");
+    setDescription("");
+  
+  }
+  function returnTohome(){
+    <Link className="hover:text-blue-400" to="/"></Link>
+
+  }
+
+  return (
+    <div className=" min-h-screen bg-gray-100 flex justify-center items-center p-5 text-center" >
+      <form
+        onSubmit= {handleSubmit}
+        className=" bg-white shadow-lg rounded-xl p-8 w-full max-w-xl" >
+        <h2 className="text-3xl font-bold text-center mb-6" > Create New Blog</h2>
+
+        {/* Title */}
+        <input
+          type="text"
+          placeholder="Blog Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+
+        {/* Author */}
+        <input
+          type="text"
+          placeholder="Author Name"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+
+        {/* Description */}
+        <textarea
+          placeholder="Write your blog..."
+          rows="5"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+       className=" w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+
+
+        {/* Button */}
+        <button
+          type="submit"
+          className=" w-30 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition" >
+          Publish Blog
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default BlogForm;

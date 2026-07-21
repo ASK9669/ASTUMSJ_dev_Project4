@@ -5,7 +5,7 @@ function Navbar() {
   return (
     <nav className=" bg-gray-200 text-black p-5 flex justify-between items-center">
       {/* Logo */}
-      <div className="text-2xl font-bold text-blue-500">MinimalistBlog</div>
+      <div className="text-2xl font-bold text-blue-500">ListBlog</div>
 
       {/* Links */}
       <div className="flex gap-6">

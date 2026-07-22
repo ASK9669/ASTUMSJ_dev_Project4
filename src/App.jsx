@@ -39,9 +39,8 @@ function App() {
         setLoading(true);
 
         const response = await fetch("https://dummyjson.com/posts?limit=10");
-   
-          return response.json();
-   
+
+        return response.json();
 
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
@@ -69,16 +68,13 @@ function App() {
         setLoading(false);
       }
     }
-    
 
     fetchBlogs();
   }, []);
-  
+
   // Create Blog
   function addBlog(newBlog) {
-    const blog = {
-      ...newBlog,
-      id: Date.now(),
+    const blog = {...newBlog,id: Date.now(),
       image: `https://picsum.photos/400/250?random=${Date.now()}`,
     };
 
@@ -86,13 +82,11 @@ function App() {
   }
 
   // Delete Blog
-  function deleteBlog(id) {
+  function deleteBlog(id) { 
     setBlogs(blogs.filter((blog) => blog.id !== id));
-
     // Remove from bookmarks if bookmarked
     setBookmarks(bookmarks.filter((blog) => blog.id !== id));
   }
-
   // Bookmark
   function toggleBookmark(blog) {
     const exists = bookmarks.some((item) => item.id === blog.id);
@@ -122,7 +116,6 @@ function App() {
             />
           }
         />
-
         <Route path="/blog/:id" element={<BlogDetails blogs={blogs} />} />
 
         <Route path="/create" element={<CreatePost addBlog={addBlog} />} />

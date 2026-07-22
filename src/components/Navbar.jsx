@@ -1,29 +1,41 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../assets/ASKlogo.jpeg";
 
 function Navbar() {
   return (
     <nav className=" bg-gray-200 text-black p-5 flex justify-between items-center">
-      {/* Logo */}
       <div className="text-2xl font-bold text-blue-500">ListBlog</div>
-
-      {/* Links */}
       <div className="flex gap-6">
-        <Link className="hover:text-blue-400" to="/">
+        <NavLink
+          className={({ isActive }) => {
+            return isActive ? "text-blue-500 bold underline" : "";
+          }}
+          to="/"
+        >
           Home
-        </Link>
+        </NavLink>
 
-        <Link className="hover:text-blue-400" to="/create">
+        <NavLink
+          className={({ isActive }) => {
+            return isActive ? "text-blue-500 underline" : "";
+          }}
+          to="/create"
+        >
           Create Post
-        </Link>
+        </NavLink>
 
-        <Link className="hover:text-blue-400" to="/bookmarks">
+        <NavLink
+          className={({ isActive }) => {
+            return isActive ? "text-blue-500 underline" : "";
+          }}
+          to="/bookmarks"
+        >
           Bookmarks
-        </Link>
+        </NavLink>
       </div>
       <div className="flex justify-between">
-        <button>🔍</button>
-        <img src={logo} alt="ASK Logo" className="w-5 h-5 rounded-full" />
+        <button className="mr-2">🔍</button>
+        <img src={logo} alt="ASK Logo" className="w-7 h-7 ml-2 rounded-full" />
       </div>
     </nav>
   );

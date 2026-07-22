@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BlogCard from "./BlogCard";
+import { useNavigate } from "react-router-dom";
 
 function BlogForm({ addBlog }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+
   const wordCount = description
     .trim()
     .split(/\s+/)
@@ -18,6 +21,7 @@ function BlogForm({ addBlog }) {
     setTitle("");
     setAuthor("");
     setDescription("");
+    navigate("/");
   }
   function returnTohome() {
     <Link className="hover:text-blue-400" to="/"></Link>;
@@ -69,9 +73,9 @@ function BlogForm({ addBlog }) {
         {/* Button */}
         <button
           type="submit"
-          className=" w-30 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+          className=" w-20 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
         >
-          Publish Blog
+          Post
         </button>
       </form>
     </div>

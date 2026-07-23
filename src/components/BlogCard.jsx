@@ -5,7 +5,7 @@ function BlogCard({ blog, toggleBookmark, bookmarks, deleteBlog }) {
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-      <Link to={`/blog/${blog.id}`}>
+      {/* <Link to={`/blog/${blog.id}`}> */}
         {" "}
         <div className="p-5">
           {/* <img
@@ -32,7 +32,7 @@ function BlogCard({ blog, toggleBookmark, bookmarks, deleteBlog }) {
             <button onClick={() => deleteBlog(blog.id)} className=" text-black rounded hover:bg-red-700" > 🗑️</button>
           </div>
         </div>{" "}
-      </Link>
+      {/* </Link> */}
     </div>
   );
 }

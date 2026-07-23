@@ -71,6 +71,11 @@ function BlogForm({ addBlog }) {
       
 
         {/* Button */}
+        <div className="float-left">
+          <button className="m-5 font-bold">B</button>
+          <button className="m-5 italic">I</button>
+          <button className="m-5 underline italic">U</button>
+        </div>
         <button
           type="submit"
           className=" w-20 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
@@ -78,6 +83,7 @@ function BlogForm({ addBlog }) {
           Post
         </button>
       </form>
+      <button>AAA</button>
     </div>
   );
 }

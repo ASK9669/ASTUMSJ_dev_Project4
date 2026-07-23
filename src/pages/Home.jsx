@@ -1,7 +1,14 @@
-import BlogCard from "../components/BlogCard";
 import { Link } from "react-router-dom";
-function Home({blogs,loading,error,deleteBlog,toggleBookmark,bookmarks,}) 
-{
+import BlogCard from "../components/BlogCard";
+
+function Home({
+  blogs,
+  loading,
+  error,
+  deleteBlog,
+  toggleBookmark,
+  bookmarks,
+}) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -19,41 +26,62 @@ function Home({blogs,loading,error,deleteBlog,toggleBookmark,bookmarks,})
   }
 
   return (
-    <div className="contaipner  bg-gray-100 m-auto border shadow-lg ">
-      <div className="container text-center mt-3 p-4 m-auto bg-gray-200">
-        <h1 className="text-4xl font-bold text-center mb-8">WelCome to MinimalistBlog</h1>
-        <p> A space for thoutful narratives minimalist design and the art ofsharing stories that matter. </p>
-      </div>
-      <div className="container m-auto px-5 py-8">
-        <div className="container flex  justify-between">
-          <div>
-            <h1 className="text-4xl font-bold">Latest Storeis</h1>
-            <p>Discover the lattest thoughts and narratives from our community</p>
-          </div>
-          <button className="bg-blue-400 m-8 p-2 rounded-md text-white">
-            <Link className="hover:text-blue-900" to="/create">
-              + Create Post
-            </Link>
-          </button>
+    <div className="bg-gray-100 min-h-screen">
+      {/* Hero Section */}
+      <section className="bg-white shadow-md py-12">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h1 className="text-5xl font-bold text-gray-800">
+            Welcome to Minimalist Blog
+          </h1>
+
+          <p className="text-gray-600 mt-4 text-lg">
+            A space for thoughtful narratives, minimalist design, and the art
+            of sharing stories that matter.
+          </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.length === 0 ? (
-            <div className="col-span-full text-center mt-20">
-              <h1 className="text-3xl font-bold">No Blogs Found</h1>
-            </div>
-          ) : (
-            blogs.map((blog) => (
+      </section>
+
+      {/* Blogs Section */}
+      <section className="max-w-7xl mx-auto px-6 py-10">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h2 className="text-4xl font-bold">
+              Latest Stories
+            </h2>
+
+            <p className="text-gray-500 mt-2">
+              Discover the latest thoughts and narratives from our community.
+            </p>
+          </div>
+
+          <Link
+            to="/create"
+            className="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition"
+          >
+            + Create Post
+          </Link>
+        </div>
+
+        {blogs.length === 0 ? (
+          <div className="text-center py-20">
+            <h1 className="text-3xl font-bold text-gray-500">
+              No Blogs Found
+            </h1>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogs.map((blog) => (
               <BlogCard
                 key={blog.id}
                 blog={blog}
+                deleteBlog={deleteBlog}
                 toggleBookmark={toggleBookmark}
                 bookmarks={bookmarks}
-                deleteBlog={deleteBlog}
               />
-            ))
-          )}
-        </div>
-      </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }

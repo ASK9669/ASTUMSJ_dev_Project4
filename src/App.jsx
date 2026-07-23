@@ -6,15 +6,20 @@ import Home from "./pages/Home";
 import BlogDetails from "./pages/BlogDetails";
 import Bookmarks from "./pages/Bookmarks";
 import CreatePost from "./pages/CreatePost";
+
 import "./App.css";
-import initialBlogs from "./data/blogs";
 
 function App() {
-  // Blogs
+  // Local blogs (created by user)
   const [blogs, setBlogs] = useState(() => {
     const savedBlogs = localStorage.getItem("blogs");
-    return savedBlogs ? JSON.parse(savedBlogs) : initialBlogs;
+    return savedBlogs ? JSON.parse(savedBlogs) : [];
   });
+
+  // API blogs
+  const [apiBlogs, setApiBlogs] = useState([]);
+
+  // Loading & Error
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -33,14 +38,16 @@ function App() {
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
+
+  // Fetch posts from DummyJSON
   useEffect(() => {
-    async function fetchBlogs() {
+    async function fetchPosts() {
       try {
         setLoading(true);
 
-        const response = await fetch("https://dummyjson.com/posts?limit=10");
-
-        return response.json();
+        const response = await fetch(
+          "https://dummyjson.com/posts?limit=10"
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
@@ -48,20 +55,17 @@ function App() {
 
         const data = await response.json();
 
-        const apiBlogs = data.posts.map((post) => ({
+        const posts = data.posts.map((post) => ({
           id: post.id,
           title: post.title,
-          author: "DummyJSON",
+          author: `User ${post.userId}`,
           description: post.body,
+          tags: post.tags,
+          reactions: post.reactions,
           image: `https://picsum.photos/600/400?random=${post.id}`,
         }));
 
-        // Only load API blogs if localStorage doesn't already contain blogs
-        const savedBlogs = localStorage.getItem("blogs");
-
-        if (!savedBlogs) {
-          setBlogs(apiBlogs);
-        }
+        setApiBlogs(posts);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -69,34 +73,47 @@ function App() {
       }
     }
 
-    fetchBlogs();
+    fetchPosts();
   }, []);
 
-  // Create Blog
+  // Create blog
   function addBlog(newBlog) {
-    const blog = {...newBlog,id: Date.now(),
-      image: `https://picsum.photos/400/250?random=${Date.now()}`,
+    const blog = {
+      ...newBlog,
+      id: Date.now(),
     };
 
-    setBlogs([...blogs, blog]);
+    setBlogs((prevBlogs) => [...prevBlogs, blog]);
   }
 
-  // Delete Blog
-  function deleteBlog(id) { 
-    setBlogs(blogs.filter((blog) => blog.id !== id));
-    // Remove from bookmarks if bookmarked
-    setBookmarks(bookmarks.filter((blog) => blog.id !== id));
+  // Delete blog
+  function deleteBlog(id) {
+    setBlogs((prevBlogs) =>
+      prevBlogs.filter((blog) => blog.id !== id)
+    );
+
+    setBookmarks((prevBookmarks) =>
+      prevBookmarks.filter((blog) => blog.id !== id)
+    );
   }
+
   // Bookmark
   function toggleBookmark(blog) {
-    const exists = bookmarks.some((item) => item.id === blog.id);
+    const exists = bookmarks.some(
+      (item) => item.id === blog.id
+    );
 
     if (exists) {
-      setBookmarks(bookmarks.filter((item) => item.id !== blog.id));
+      setBookmarks(
+        bookmarks.filter((item) => item.id !== blog.id)
+      );
     } else {
       setBookmarks([...bookmarks, blog]);
     }
   }
+
+  // Combine API blogs and local blogs
+  const allBlogs = [...blogs, ...apiBlogs];
 
   return (
     <>
@@ -107,7 +124,7 @@ function App() {
           path="/"
           element={
             <Home
-              blogs={blogs}
+              blogs={allBlogs}
               loading={loading}
               error={error}
               deleteBlog={deleteBlog}
@@ -116,9 +133,24 @@ function App() {
             />
           }
         />
-        <Route path="/blog/:id" element={<BlogDetails blogs={blogs} />} />
 
-        <Route path="/create" element={<CreatePost addBlog={addBlog} />} />
+        <Route
+          path="/blog/:id"
+          element={
+            <BlogDetails
+              blogs={allBlogs}
+            />
+          }
+        />
+
+        <Route
+          path="/create"
+          element={
+            <CreatePost
+              addBlog={addBlog}
+            />
+          }
+        />
 
         <Route
           path="/bookmarks"

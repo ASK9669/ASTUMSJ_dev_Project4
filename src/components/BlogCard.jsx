@@ -26,10 +26,10 @@ function BlogCard({ blog, toggleBookmark, bookmarks, deleteBlog }) {
 
             <button
               onClick={() => toggleBookmark(blog)}
-              className=" text-black rounded hover:bg-yellow-600" >{isBookmarked ? "💛" : "🤍 "}
+              className=" text-black rounded hover:bg-yellow-600" >{isBookmarked ? "❤️" : "🤍 "}
             </button>
 
-            <button onClick={() => deleteBlog(blog.id)} className=" text-black rounded hover:bg-red-700" > 🗑️</button>
+            {/* <button onClick={() => deleteBlog(blog.id)} className=" text-black rounded hover:bg-red-700" > 🗑️</button> */}
           </div>
         </div>{" "}
       {/* </Link> */}

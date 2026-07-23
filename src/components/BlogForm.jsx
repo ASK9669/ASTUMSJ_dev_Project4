@@ -83,7 +83,7 @@ function BlogForm({ addBlog }) {
           Post
         </button>
       </form>
-      <button>AAA</button>
+      
     </div>
   );
 }

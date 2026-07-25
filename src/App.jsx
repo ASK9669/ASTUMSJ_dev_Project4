@@ -10,31 +10,23 @@ import CreatePost from "./pages/CreatePost";
 import "./App.css";
 
 function App() {
-  // Local blogs (created by user)
   const [blogs, setBlogs] = useState(() => {
     const savedBlogs = localStorage.getItem("blogs");
     return savedBlogs ? JSON.parse(savedBlogs) : [];
   });
 
-  // API blogs
   const [apiBlogs, setApiBlogs] = useState([]);
-
-  // Loading & Error
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  // Bookmarks
   const [bookmarks, setBookmarks] = useState(() => {
     const savedBookmarks = localStorage.getItem("bookmarks");
     return savedBookmarks ? JSON.parse(savedBookmarks) : [];
   });
 
-  // Save blogs
   useEffect(() => {
     localStorage.setItem("blogs", JSON.stringify(blogs));
   }, [blogs]);
 
-  // Save bookmarks
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
@@ -76,7 +68,6 @@ function App() {
     fetchPosts();
   }, []);
 
-  // Create blog
   function addBlog(newBlog) {
     const blog = {
       ...newBlog,
@@ -85,8 +76,6 @@ function App() {
 
     setBlogs((prevBlogs) => [...prevBlogs, blog]);
   }
-
-  // Delete blog
   function deleteBlog(id) {
     setBlogs((prevBlogs) =>
       prevBlogs.filter((blog) => blog.id !== id)
@@ -96,8 +85,6 @@ function App() {
       prevBookmarks.filter((blog) => blog.id !== id)
     );
   }
-
-  // Bookmark
   function toggleBookmark(blog) {
     const exists = bookmarks.some(
       (item) => item.id === blog.id
@@ -111,8 +98,6 @@ function App() {
       setBookmarks([...bookmarks, blog]);
     }
   }
-
-  // Combine API blogs and local blogs
   const allBlogs = [...blogs, ...apiBlogs];
 
   return (

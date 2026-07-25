@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 function BlogDetails({ blogs }) {
   const { id } = useParams();
@@ -62,10 +62,12 @@ function BlogDetails({ blogs }) {
 
   return (
     <div className="max-w-5xl mx-auto p-8">
-      <div className="container m-4">
-        <button className="text-blue-500 font-semibold hover:text-blue-900">⬅️ Back </button>
-      </div>
-
+      <NavLink to="/">
+          <button className="text-blue-500 font-semibold hover:text-blue-900 m-5">
+            ⬅️ Back{" "}
+          </button>
+      </NavLink>
+      
       {/* Show uploaded image only if available */}
       {blog.image && (
         <img
